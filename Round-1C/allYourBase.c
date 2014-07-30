@@ -12,8 +12,8 @@
 
 int map[36] ;
 
-int findLowestNumberOfSeconds( char *numString ) ;
-int convertAlienToDecimal( char *numString, char numChars, int base ) ;
+double findLowestNumberOfSeconds( char *numString ) ;
+double convertAlienToDecimal( char *numString, char numChars, int base ) ;
 void initMap() ;
 int getKeyValue( char c ) ;
 int setKeyValue( char c , int a ) ;
@@ -40,14 +40,14 @@ int main( int argc, char *argv[] ) {
   for ( i = 0 ; i < numCases ; i++ ) {
     initMap();
     fscanf( fin, "%s", WAR ) ;
-    printf( "%s: %d\n", WAR, findLowestNumberOfSeconds(WAR)) ;
+    printf( "Case #%d: %.0f\n", i+1, findLowestNumberOfSeconds(WAR)) ;
   }
   
 return 0 ;
 
 }
 
-int findLowestNumberOfSeconds( char *numString ) {
+double findLowestNumberOfSeconds( char *numString ) {
   
   int currChar = 0, numChars = 0;
   int highestNumber = 1 ;
@@ -73,18 +73,19 @@ int findLowestNumberOfSeconds( char *numString ) {
   return convertAlienToDecimal(numString, numChars, highestNumber ) ;
 }
 
-int convertAlienToDecimal( char *numString, char numChars, int base ) {
+double convertAlienToDecimal( char *numString, char numChars, int base ) {
 
-  int i ;
+  int i;
+  double sum = 0 ;
 
-  int sum = 0 ;
-
-  printf( "Base: %d, String: %s\n", base, numString ) ;
-
-  for ( i = numChars - 1 ; i >= 0 ; i-- ) {
+  /*  for ( i = numChars - 1 ; i >= 0 ; i-- ) {
     sum += pow(base, numChars - 1 - i) * getKeyValue( numString[i] ) ;
   }
+  */
 
+  for ( i = 0 ; i < numChars ; i++ ) {
+    sum = sum * base + getKeyValue( numString[i] ) ;
+  }
   return sum ;
 
 }
