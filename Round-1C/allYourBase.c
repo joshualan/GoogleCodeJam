@@ -11,19 +11,17 @@
 
 int map[36] ;
 
+int findLowestNumberOfSeconds( char *numString ) ;
+
 void initMap() ;
 int getKeyValue( char c ) ;
 int setKeyValue( char c , int a ) ;
 
 int main( int argc, char *argv[] ) {
 
-  int highestNumber = 1;
-  int isZeroAssigned = 0;
- 
-  char WAR[61], c ;
+  char WAR[61];
 
-  int count = 0, i, numCases ;
-  int currChar = 0 ;
+  int i, numCases ;
 
   FILE *fin ;
   
@@ -34,29 +32,63 @@ int main( int argc, char *argv[] ) {
 
   fin = fopen( argv[1], "r" ) ;
 
+  /* Get number of test cases */
   fscanf( fin, "%d", &numCases ) ;
 
+  /* Iterate through each string/test case */
   for ( i = 0 ; i < numCases ; i++ ) {
+    initMap();
     fscanf( fin, "%s", WAR ) ;
-
-    while( c = WAR[currChar] ) {
-      printf( "%c", c ) ;
-      currChar++;
-    }
-    printf( "\n" ) ;
-    currChar = 0 ;
-    
+    printf( "%s: %d\n", WAR, findLowestNumberOfSeconds(WAR)) ;
   }
   
-  return 0 ;
+return 0 ;
 
 }
 
-/* This "resets" all of the values in our "map" to 0 */
+int findLowestNumberOfSeconds( char *numString ) {
+  
+  int i ;
+
+  int currChar = 0;
+  int highestNumber = 1 ;
+  int isZeroAssigned = 0 ;
+
+  char c ;
+
+  while( c = numString[currChar] ) {
+    
+    if ( getKeyValue(c) == -1 ) {
+      if ( highestNumber > 1 && !isZeroAssigned ) {
+	setKeyValue(c, 0) ;
+	isZeroAssigned = 1;
+      }
+      else {
+	setKeyValue(c, highestNumber++) ;
+      }
+    }
+    currChar++;
+  }
+
+  printf( "Test Case %s\n", numString ) ;
+  for ( i = 0 ; i < 36 ; i++ ) {
+
+    if (map[i] != -1) {
+      printf( "%d: %d\n", i, map[i] ) ;
+    }
+
+  } 
+
+  return 0 ;
+}
+
+/* This "resets" all of the values in our "map" to -1. We want the default value
+   to be a negative number and not 0 because 0 is a valid value for a character.
+*/
 void initMap() {
   int i ;
   for (i = 0; i < 36; i++) {
-    map[i] = 0 ;
+    map[i] = -1 ;
   }
   return ;
 }
@@ -73,13 +105,13 @@ void initMap() {
 */
 int getKeyValue( char c ) {
   if ( c >= 48 && c <= 57 ) {
-    return map[c-48];
+    return map[c-48] ;
   }
   else if ( c >= 97 && c <= 122 ) {
-    return map[c-87];
+    return map[c-87] ;
   }
   else {
-    return -1;
+    return -1 ;
   }
 }
 
