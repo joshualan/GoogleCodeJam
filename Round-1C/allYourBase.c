@@ -12,8 +12,8 @@
 
 int map[36] ;
 
-double findLowestNumberOfSeconds( char *numString ) ;
-double convertAlienToDecimal( char *numString, char numChars, int base ) ;
+long long findLowestNumberOfSeconds( char *numString ) ;
+long long convertAlienToDecimal( char *numString, int numChars, int base ) ;
 void initMap() ;
 int getKeyValue( char c ) ;
 int setKeyValue( char c , int a ) ;
@@ -40,21 +40,25 @@ int main( int argc, char *argv[] ) {
   for ( i = 0 ; i < numCases ; i++ ) {
     initMap();
     fscanf( fin, "%s", WAR ) ;
-    printf( "Case #%d: %.0f\n", i+1, findLowestNumberOfSeconds(WAR)) ;
+    printf( "Case #%d: %lld\n", i+1, findLowestNumberOfSeconds(WAR)) ;
   }
   
 return 0 ;
 
 }
 
-double findLowestNumberOfSeconds( char *numString ) {
+long long findLowestNumberOfSeconds( char *numString ) {
   
-  int currChar = 0, numChars = 0;
+  int currChar = 0 , numChars = 0;
   int highestNumber = 1 ;
   int isZeroAssigned = 0 ;
 
   char c ;
 
+  /* Iterate through the string and assign the lowest possible
+     value for each unique character encountered. This means you
+     assign 1 to the first char, 0 to the next, 2, 3, etc. 
+  */
   while( c = numString[currChar] ) {
     
     if ( getKeyValue(c) == -1 ) {
@@ -73,19 +77,18 @@ double findLowestNumberOfSeconds( char *numString ) {
   return convertAlienToDecimal(numString, numChars, highestNumber ) ;
 }
 
-double convertAlienToDecimal( char *numString, char numChars, int base ) {
+/* So this function converts the given string to decimal using the values
+   stored in the map */
+long long convertAlienToDecimal( char *numString, int numChars, int base ) {
 
   int i;
-  double sum = 0 ;
+  long long sum = 0 ;
 
-  /*  for ( i = numChars - 1 ; i >= 0 ; i-- ) {
-    sum += pow(base, numChars - 1 - i) * getKeyValue( numString[i] ) ;
-  }
-  */
-
+  /* basic conversion */
   for ( i = 0 ; i < numChars ; i++ ) {
     sum = sum * base + getKeyValue( numString[i] ) ;
   }
+
   return sum ;
 
 }
