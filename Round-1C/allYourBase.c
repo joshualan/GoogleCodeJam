@@ -16,7 +16,7 @@ int getKeyValue( char c ) ;
 int setKeyValue( char c , int a ) ;
 
 int main( int argc, char *argv[] ) {
-
+  /* TESTING THE MAP FUNCTIONS */
   initMap();
 
   setKeyValue( '0', 1 ) ;
