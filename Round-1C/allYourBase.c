@@ -20,7 +20,10 @@ int main( int argc, char *argv[] ) {
   int highestNumber = 1;
   int isZeroAssigned = 0;
  
+  char WAR[61], c ;
+
   int count = 0, i, numCases ;
+  int currChar = 0 ;
 
   FILE *fin ;
   
@@ -33,7 +36,17 @@ int main( int argc, char *argv[] ) {
 
   fscanf( fin, "%d", &numCases ) ;
 
-  printf( "The number of test cases is %d\n", numCases ) ;
+  for ( i = 0 ; i < numCases ; i++ ) {
+    fscanf( fin, "%s", WAR ) ;
+
+    while( c = WAR[currChar] ) {
+      printf( "%c", c ) ;
+      currChar++;
+    }
+    printf( "\n" ) ;
+    currChar = 0 ;
+    
+  }
   
   return 0 ;
 
