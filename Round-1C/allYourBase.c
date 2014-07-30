@@ -8,11 +8,12 @@
 */
 
 #include <stdio.h>
+#include <math.h>
 
 int map[36] ;
 
 int findLowestNumberOfSeconds( char *numString ) ;
-
+int convertAlienToDecimal( char *numString, char numChars, int base ) ;
 void initMap() ;
 int getKeyValue( char c ) ;
 int setKeyValue( char c , int a ) ;
@@ -48,9 +49,7 @@ return 0 ;
 
 int findLowestNumberOfSeconds( char *numString ) {
   
-  int i ;
-
-  int currChar = 0;
+  int currChar = 0, numChars = 0;
   int highestNumber = 1 ;
   int isZeroAssigned = 0 ;
 
@@ -68,18 +67,26 @@ int findLowestNumberOfSeconds( char *numString ) {
       }
     }
     currChar++;
+    numChars++;
   }
 
-  printf( "Test Case %s\n", numString ) ;
-  for ( i = 0 ; i < 36 ; i++ ) {
+  return convertAlienToDecimal(numString, numChars, highestNumber ) ;
+}
 
-    if (map[i] != -1) {
-      printf( "%d: %d\n", i, map[i] ) ;
-    }
+int convertAlienToDecimal( char *numString, char numChars, int base ) {
 
-  } 
+  int i ;
 
-  return 0 ;
+  int sum = 0 ;
+
+  printf( "Base: %d, String: %s\n", base, numString ) ;
+
+  for ( i = numChars - 1 ; i >= 0 ; i-- ) {
+    sum += pow(base, numChars - 1 - i) * getKeyValue( numString[i] ) ;
+  }
+
+  return sum ;
+
 }
 
 /* This "resets" all of the values in our "map" to -1. We want the default value
