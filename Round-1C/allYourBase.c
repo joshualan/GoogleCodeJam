@@ -16,20 +16,25 @@ int getKeyValue( char c ) ;
 int setKeyValue( char c , int a ) ;
 
 int main( int argc, char *argv[] ) {
-  /* TESTING THE MAP FUNCTIONS */
-  initMap();
 
-  setKeyValue( '0', 1 ) ;
-  setKeyValue( '9', 2 ) ;
-  setKeyValue( 'a', 3 ) ;
-  setKeyValue( 'z', 4 ) ;
-  
-  printf( "0: %d\n", getKeyValue('0')) ;
-  printf( "9: %d\n", getKeyValue('9')) ;
-  printf( "a: %d\n", getKeyValue('a')) ;
-  printf( "z: %d\n", getKeyValue('z')) ;
-  
+  int highestNumber = 1;
+  int isZeroAssigned = 0;
+ 
+  int count = 0, i, numCases ;
 
+  FILE *fin ;
+  
+  if ( argc != 2 ) {
+    printf( "Usage: allYourBase file_name_with_test_cases\n" ) ;
+    return 0 ;
+  }
+
+  fin = fopen( argv[1], "r" ) ;
+
+  fscanf( fin, "%d", &numCases ) ;
+
+  printf( "The number of test cases is %d\n", numCases ) ;
+  
   return 0 ;
 
 }
